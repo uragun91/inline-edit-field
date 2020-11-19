@@ -1,0 +1,13 @@
+<h2>Reactive form</h2>
+<form [formGroup]="form">
+	<div class="single-line" contenteditable formControlName="name"></div>
+</form>
+<div class="control-value">Form control value: {{ form.get('name').value }}</div>
+
+<h2>Template form</h2>
+<div class="single-line" contenteditable disabled="true" required [(ngModel)]="templateValue"></div>
+<div class="control-value">Template value: {{ templateValue }}</div>
+
+<h2>Component wrapper</h2>
+<app-editable-input-field [(ngModel)]="componentWrappedValue"></app-editable-input-field>
+<div class="control-value">Component wrapped value: {{ componentWrappedValue }}</div>

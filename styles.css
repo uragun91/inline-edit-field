@@ -1,0 +1,16 @@
+/* Add application styles & imports to this file! */
+@import "@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+[contenteditable].single-line {
+  white-space: normal;
+  display: inline-block;
+  padding-right: 5px;
+  overflow: hidden;
+}
+[contenteditable].single-line br {
+  display: none;
+}
+[contenteditable].single-line * {
+  display: inline;
+  white-space: nowrap;
+}
