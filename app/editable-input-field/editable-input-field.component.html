@@ -1,6 +1,6 @@
 <div class="editable-input-field">
 	<div #editableInput contenteditable class="input single-line" [disabled]="!isEditing" [(ngModel)]="value"
-		(input)="onInput($event)" (blur)="onBlur()" (keyup)="onKeyUp($event)">
+		(input)="onInput($event)" (blur)="onBlur()" (paste)="onInput($event)" (keyup)="onKeyUp($event)">
 	</div>
 	<div class="edit" (click)="edit()">Edit</div>
 </div>
