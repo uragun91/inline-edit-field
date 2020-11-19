@@ -1,4 +1,6 @@
 import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   forwardRef,
@@ -8,6 +10,9 @@ import {
   ViewChild
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+
+const ENTER_KEY_CODE: number = 13;
+const ESC_KEY_CODE: number = 7;
 
 @Component({
   selector: "app-editable-input-field",
@@ -19,7 +24,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
       useExisting: forwardRef(() => EditableInputFieldComponent),
       multi: true
     }
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditableInputFieldComponent
   implements OnInit, ControlValueAccessor {
@@ -32,9 +38,11 @@ export class EditableInputFieldComponent
 
   public value: string;
 
-  constructor(private renderer: Renderer2) {}
+  constructor(private renderer: Renderer2, private cdr: ChangeDetectorRef) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log("isEditing", this.isEditing);
+  }
 
   registerOnChange(fn: (value: string) => void) {
     this.onChange = fn;
@@ -49,6 +57,7 @@ export class EditableInputFieldComponent
       return;
     }
     this.value = value;
+    this.cdr.markForCheck();
   }
 
   onInput(event) {
@@ -59,8 +68,13 @@ export class EditableInputFieldComponent
     this.onTouched();
   }
 
+  onKeyUp(event: KeyboardEvent) {
+    console.log(event);
+  }
+
   edit() {
     this.isEditing = true;
-    this.input.nativeElement.focus();
+    // hack to make focus work
+    setTimeout(() => this.input.nativeElement.focus());
   }
 }
