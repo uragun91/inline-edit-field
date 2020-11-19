@@ -4,6 +4,15 @@
 
 .editable-input-field > .input {
   margin-right: 5px;
+  padding: 2px 5px 2px 3px;
+  outline: none;
+  background: transparent;
+
+  transition: ease-in-out 0.2s;
+}
+
+.editable-input-field > .input:focus {
+  background: rgb(224, 224, 224);
 }
 
 .editable-input-field > .edit {
