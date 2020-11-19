@@ -11,8 +11,8 @@ import {
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
-const ENTER_KEY_CODE: number = 13;
-const ESC_KEY_CODE: number = 7;
+const ENTER_KEY_CODE: string = "Enter";
+const ESC_KEY_CODE: string = "Escape";
 
 @Component({
   selector: "app-editable-input-field",
@@ -37,6 +37,7 @@ export class EditableInputFieldComponent
   private onTouched: () => void = () => {};
 
   public value: string;
+  public valueToRestoreTo: string;
 
   constructor(private renderer: Renderer2, private cdr: ChangeDetectorRef) {}
 
@@ -57,6 +58,7 @@ export class EditableInputFieldComponent
       return;
     }
     this.value = value;
+    this.valueToRestoreTo = value;
     this.cdr.markForCheck();
   }
 
@@ -69,12 +71,30 @@ export class EditableInputFieldComponent
   }
 
   onKeyUp(event: KeyboardEvent) {
-    console.log(event);
+    const keyCode: string = event.code;
+    if ([ENTER_KEY_CODE, ESC_KEY_CODE].includes(event.code)) {
+      if (keyCode === ENTER_KEY_CODE) {
+        // commit
+        this.valueToRestoreTo = this.value;
+      } else if (keyCode === ESC_KEY_CODE) {
+        // reset
+        this.value = this.valueToRestoreTo;
+      }
+
+      this.finishEdit();
+      this.onChange(this.value);
+    }
   }
 
   edit() {
     this.isEditing = true;
     // hack to make focus work
     setTimeout(() => this.input.nativeElement.focus());
+  }
+
+  finishEdit() {
+    this.isEditing = true;
+    // hack to make focus work
+    setTimeout(() => this.input.nativeElement.blur());
   }
 }
