@@ -1,1 +1,6 @@
-<div class="single-line" contenteditable [(ngModel)]="value" (input)="onInput($event)"></div>
+<div class="editable-input-field">
+	<div #editableInput class="input single-line" contenteditable [disabled]="!isEditing" [(ngModel)]="value"
+		(input)="onInput($event)" (blur)="onBlur()">
+	</div>
+	<div class="edit" (click)="edit()">Edit</div>
+</div>

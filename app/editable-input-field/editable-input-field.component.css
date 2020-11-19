@@ -1,0 +1,11 @@
+.editable-input-field {
+  display: flex;
+}
+
+.editable-input-field > .input {
+  margin-right: 5px;
+}
+
+.editable-input-field > .edit {
+  cursor: pointer;
+}
