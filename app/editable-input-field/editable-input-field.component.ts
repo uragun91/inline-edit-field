@@ -40,6 +40,7 @@ export class EditableInputFieldComponent
   }
 
   onInput(event) {
+    console.log(event);
     this.onChange(this.value);
   }
 }
