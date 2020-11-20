@@ -67,7 +67,7 @@ export class EditableInputFieldComponent
   }
 
   onBlur() {
-    this.onTouched();
+    this.finishEdit();
   }
 
   onKeyUp(event: KeyboardEvent) {
@@ -93,8 +93,11 @@ export class EditableInputFieldComponent
   }
 
   finishEdit() {
-    this.isEditing = true;
+    this.isEditing = false;
     // hack to make focus work
-    setTimeout(() => this.input.nativeElement.blur());
+    setTimeout(() => {
+      this.input.nativeElement.blur();
+      this.onTouched();
+    });
   }
 }
